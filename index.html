@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>carlo</title>
+  <meta name="description" content="Security researcher based in Manila." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">_blackb3ard<span class="dot">~#</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#certs">certs</a></li>
+    <li><a href="#cves">cves</a></li>
+    <li><a href="https://notes.carlo.dev" class="external">writeups ↗</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="about">
+    <div class="hero-content">
+      <p class="hero-eyebrow">// security researcher · pentester · manila</p>
+      <h1 class="hero-name">Carlo Jae Avila<span class="cursor">_</span></h1>
+      <p class="hero-subtitle">
+        breaking things professionally —
+        <span class="purple">finding what others miss</span>
+      </p>
+      <p class="hero-bio">
+        Security researcher based in Manila. I work on mobile and web application security,
+        red team operations, and offensive tooling. Placeholder bio — replace this with your
+        own words. Keep it short, honest, and to the point.
+      </p>
+      <div class="hero-ctas">
+        <a href="https://notes.carlo.dev" class="btn btn-primary">read the writeups ↗</a>
+        <a href="https://github.com" class="btn btn-ghost">github</a>
+        <a href="mailto:placeholder@example.com" class="btn btn-ghost">contact</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="phone-frame">
+        <div class="phone-status">
+          <span>9:41</span>
+          <span class="phone-app-name">surface.scan</span>
+        </div>
+        <div class="phone-glitch-inner">
+          <pre class="phone-screen"><span class="ps-label">ATTACK SURFACE</span>
+<span class="ps-dim">target: com.banking.app</span>
+<span class="ps-dim">─────────────────────</span>
+
+<span class="ps-warn">[!]</span> ssl pinning    <span class="ps-bad">bypassable</span>
+<span class="ps-warn">[!]</span> root detect    <span class="ps-bad">weak</span>
+<span class="ps-warn">[!]</span> backup flag    <span class="ps-bad">enabled</span>
+<span class="ps-warn">[!]</span> exported actv  <span class="ps-bad">3 found</span>
+<span class="ps-warn">[!]</span> webview js     <span class="ps-bad">true</span>
+<span class="ps-warn">[!]</span> deep links     <span class="ps-bad">unvalidated</span>
+
+<span class="ps-ok">[+]</span> pwning for fun and profit...
+<span class="ps-cursor">_</span></pre>
+        </div>
+        <div class="phone-home-bar"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CURRENTLY -->
+  <section id="currently">
+    <p class="section-label">// currently</p>
+    <div class="currently-layout">
+
+      <div class="work-affiliations">
+
+        <div class="work-block">
+          <img src="secuna-logo.svg" alt="Secuna" class="work-logo" />
+          <span class="work-dot work-dot-current"></span>
+          <p class="work-role work-role-current">Lead Offensive Security Engineer</p>
+
+          <div class="work-spacer"></div>
+          <span class="work-dot"></span>
+          <p class="work-role">Junior Penetration Tester</p>
+
+          <div class="work-spacer"></div>
+          <span class="work-dot"></span>
+          <p class="work-role">Penetration Testing Intern</p>
+        </div>
+
+        <div class="work-block">
+          <img src="logo-original.png" alt="hackstreetboys" class="work-logo work-logo-icon" />
+          <span class="work-dot work-dot-current"></span>
+          <p class="work-role work-role-current">saling pusa</p>
+        </div>
+
+      </div>
+
+      <div class="work-focus">
+        <p class="work-focus-label">// focus</p>
+        <ul class="work-focus-list">
+          <li>Mobile Application Security</li>
+          <li>Web Application Penetration Testing</li>
+          <li>Red Team Operations</li>
+          <li>Vulnerability Research</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CERTS -->
+  <section id="certs">
+    <p class="section-label">// certifications &amp; training</p>
+
+    <div class="cert-group">
+      <p class="cert-group-label">certified</p>
+      <div class="cert-grid">
+
+      <div class="cert-row">
+        <img src="badge-oscp.png" alt="OSCP badge" class="cert-logo" />
+        <div class="cert-info">
+          <div class="cert-name">
+            <span class="cert-acronym">OSCP</span>
+            <span class="cert-fullname">Offensive Security Certified Professional</span>
+          </div>
+          <div class="cert-desc">Validates hands-on exploitation skills through a 24-hour live exam against a real network of machines.</div>
+        </div>
+        <a class="cert-link" href="https://www.credential.net/" target="_blank" rel="noopener">↗</a>
+      </div>
+
+      <div class="cert-row">
+        <img src="badge-ceh.png" alt="CEH badge" class="cert-logo" />
+        <div class="cert-info">
+          <div class="cert-name">
+            <span class="cert-acronym">CEH</span>
+            <span class="cert-fullname">Certified Ethical Hacker</span>
+          </div>
+          <div class="cert-desc">Covers ethical hacking methodologies, tools, and techniques across 20 security domains.</div>
+        </div>
+        <a class="cert-link" href="https://aspen.eccouncil.org/verify" target="_blank" rel="noopener">↗</a>
+      </div>
+
+      <div class="cert-row">
+        <img src="badge-security-plus.png" alt="Security+ badge" class="cert-logo" />
+        <div class="cert-info">
+          <div class="cert-name">
+            <span class="cert-acronym">Security+</span>
+            <span class="cert-fullname">CompTIA Security+</span>
+          </div>
+          <div class="cert-desc">Baseline certification covering threat management, cryptography, identity, and network security.</div>
+        </div>
+        <a class="cert-link" href="https://verify.comptia.org/" target="_blank" rel="noopener">↗</a>
+      </div>
+
+      <div class="cert-row">
+        <img src="badge-ejpt.svg" alt="eJPT badge" class="cert-logo" />
+        <div class="cert-info">
+          <div class="cert-name">
+            <span class="cert-acronym">eJPT</span>
+            <span class="cert-fullname">eLearnSecurity Junior Penetration Tester</span>
+          </div>
+          <div class="cert-desc">Entry-level penetration testing certification with practical labs covering network and web exploitation.</div>
+        </div>
+        <a class="cert-link" href="https://verify.ine.com/" target="_blank" rel="noopener">↗</a>
+      </div>
+
+      </div><!-- /.cert-grid -->
+    </div>
+
+    <div class="cert-group">
+      <p class="cert-group-label">recent training</p>
+      <ul class="training-list">
+        <li>TCM Security · Practical Ethical Hacking</li>
+        <li>HTB Academy · Bug Bounty Hunter Path</li>
+        <li>Sektor7 · Malware Development Essentials</li>
+        <li>SANS OnDemand · SEC560</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CVES -->
+  <section id="cves">
+    <p class="section-label">// cves</p>
+
+    <div class="cve-row">
+      <span class="cve-id">CVE-XXXX-XXXXX</span>
+      <span class="cve-severity severity-critical">CRITICAL</span>
+      <div class="cve-body">
+        <div class="cve-product">Vendor · Product Name</div>
+        <div class="cve-desc">Placeholder — replace with a one-line description of the vulnerability you discovered and its impact.</div>
+      </div>
+      <a href="https://nvd.nist.gov/" class="project-link" target="_blank" rel="noopener">↗</a>
+    </div>
+
+    <div class="cve-row">
+      <span class="cve-id">CVE-XXXX-XXXXX</span>
+      <span class="cve-severity severity-high">HIGH</span>
+      <div class="cve-body">
+        <div class="cve-product">Vendor · Product Name</div>
+        <div class="cve-desc">Placeholder — replace with a one-line description of the vulnerability you discovered and its impact.</div>
+      </div>
+      <a href="https://nvd.nist.gov/" class="project-link" target="_blank" rel="noopener">↗</a>
+    </div>
+
+    <div class="cve-row">
+      <span class="cve-id">CVE-XXXX-XXXXX</span>
+      <span class="cve-severity severity-medium">MEDIUM</span>
+      <div class="cve-body">
+        <div class="cve-product">Vendor · Product Name</div>
+        <div class="cve-desc">Placeholder — replace with a one-line description of the vulnerability you discovered and its impact.</div>
+      </div>
+      <a href="https://nvd.nist.gov/" class="project-link" target="_blank" rel="noopener">↗</a>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">// projects</p>
+
+    <div class="project-row">
+      <div class="project-info">
+        <div class="project-name">placeholder-tool</div>
+        <div class="project-desc">A placeholder project description. Replace with your actual project and what it does.</div>
+      </div>
+      <span class="project-lang">Python</span>
+      <a href="https://github.com" class="project-link" target="_blank" rel="noopener">↗</a>
+    </div>
+
+    <div class="project-row">
+      <div class="project-info">
+        <div class="project-name">another-project</div>
+        <div class="project-desc">Another placeholder. Fill in your real work — keep descriptions to one line.</div>
+      </div>
+      <span class="project-lang">Go</span>
+      <a href="https://github.com" class="project-link" target="_blank" rel="noopener">↗</a>
+    </div>
+
+    <div class="project-row">
+      <div class="project-info">
+        <div class="project-name">third-project</div>
+        <div class="project-desc">Third placeholder project. Add your own details and real GitHub links.</div>
+      </div>
+      <span class="project-lang">Rust</span>
+      <a href="https://github.com" class="project-link" target="_blank" rel="noopener">↗</a>
+    </div>
+  </section>
+
+  <!-- FIND ME -->
+  <section id="find-me">
+    <p class="section-label">// find me</p>
+    <ul class="find-me-links">
+      <li><a href="https://github.com" target="_blank" rel="noopener">github</a></li>
+      <li><a href="https://linkedin.com" target="_blank" rel="noopener">linkedin</a></li>
+      <li><a href="https://twitter.com" target="_blank" rel="noopener">twitter</a></li>
+      <li><a href="/resume.pdf">resume</a></li>
+      <li><a href="https://hackthebox.com" target="_blank" rel="noopener">htb</a></li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <span>carlo · manila, ph · 2026</span>
+  <a href="https://notes.carlo.dev" target="_blank" rel="noopener">notes.carlo.dev ↗</a>
+</footer>
+
+</body>
+</html>
