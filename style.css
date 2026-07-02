@@ -109,7 +109,7 @@ section:last-of-type { border-bottom: none; }
   border: 1px solid var(--border);
   border-radius: 28px;
   padding: 1rem 1.1rem;
-  box-shadow: 0 0 0 5px #111116, 0 0 48px rgba(91,143,255,0.07);
+  box-shadow: 0 0 0 6px #111116, 0 0 0 7px #2a2a35, 0 0 48px rgba(91,143,255,0.07);
   position: relative;
 }
 
@@ -128,6 +128,30 @@ section:last-of-type { border-bottom: none; }
   pointer-events: none;
   z-index: 2;
 }
+
+.phone-frame::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #050506;
+  border: 1px solid var(--border);
+  z-index: 3;
+}
+
+.phone-btn {
+  position: absolute;
+  background: #3a3a48;
+  border-radius: 1px;
+  z-index: 1;
+}
+.phone-btn-power   { right: -9px; top: 70px; width: 3px; height: 28px; }
+.phone-btn-vol-up  { left: -9px;  top: 55px; width: 3px; height: 20px; }
+.phone-btn-vol-down{ left: -9px;  top: 82px; width: 3px; height: 20px; }
 
 @keyframes phone-glitch {
   0%, 88%, 100% { transform: translate(0);        filter: none; }
