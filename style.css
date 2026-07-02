@@ -530,7 +530,7 @@ section:last-of-type { border-bottom: none; }
 /* ---- PROJECTS ---- */
 .project-row {
   display: grid;
-  grid-template-columns: 1fr 80px auto;
+  grid-template-columns: 1fr 80px 1.5rem;
   align-items: baseline;
   gap: 1.5rem;
   padding: 0.85rem 0;
