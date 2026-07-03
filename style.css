@@ -290,16 +290,47 @@ section:last-of-type { border-bottom: none; }
   align-items: flex-start;
 }
 
+.currently-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.currently-hunting {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
 .work-affiliations {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  flex: 1;
 }
 
 .work-logo-hsb {
   filter: brightness(0) invert(1);
   opacity: 0.7;
+}
+
+.bounty-platforms {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.bounty-logo-link {
+  display: block;
+}
+.bounty-logo-link:hover .bounty-logo {
+  opacity: 1;
+}
+
+.bounty-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  opacity: 0.85;
 }
 
 .work-block {
