@@ -401,6 +401,8 @@ section:last-of-type { border-bottom: none; }
 /* ---- CERTS ---- */
 .cert-group { margin-bottom: 2rem; }
 .cert-group:last-child { margin-bottom: 0; }
+/* Clears the sticky nav when JS scrolls back here on "show less". */
+.cert-group { scroll-margin-top: 5rem; }
 
 .cert-group-label {
   font-size: 0.66rem;
@@ -495,25 +497,75 @@ section:last-of-type { border-bottom: none; }
 }
 .cert-link:hover { opacity: 0.7; }
 
-/* ---- TRAINING LIST ---- */
-.training-list {
-  list-style: none;
+/* ---- TRAINING (topic-grouped chips) ---- */
+/* Clickable chips reuse the .chip / .chip-list system; hover mirrors
+   .find-me-links a. Stays compact at 30+ entries: in compact mode the list
+   auto-scrolls as a vertical ticker; "show more" reveals the full static list. */
+a.chip {
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+a.chip:hover {
+  color: var(--text-bright);
+  border-color: #3a3a4a;
+}
+
+.training-topic {
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.85rem;
+  align-items: baseline;
+  padding: 0.5rem 0;
 }
-.training-list li {
-  font-size: 0.76rem;
+.training-topic + .training-topic { border-top: var(--divider); }
+
+.training-topic-label {
+  flex-shrink: 0;
+  width: 4.5rem;
+  padding-top: 0.3rem;
+  font-size: 0.66rem;
   color: var(--muted);
-  padding-left: 0.9rem;
-  position: relative;
+  letter-spacing: 0.1em;
 }
-.training-list li::before {
-  content: '—';
-  position: absolute;
-  left: 0;
-  color: #2e2e3a;
+
+.training-topic .chip-list { flex: 1; }
+
+/* Auto-scrolling compact mode. script.js adds .is-compact + a duplicate
+   .training-groups clone into .training-track ONLY when the list overflows the
+   compact window; the two identical copies + translateY(-50%) loop seamlessly.
+   Without JS (or few entries) the full static list shows — no clip, no scroll. */
+.training-viewport { position: relative; }
+.training-viewport.is-compact {
+  max-height: 9.5rem;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 82%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 82%, transparent);
 }
+.training-clone { display: none; }
+.is-compact .training-clone { display: block; }
+.is-compact .training-track {
+  animation: training-marquee var(--marquee-dur, 40s) linear infinite;
+}
+.training-viewport.is-compact:hover .training-track { animation-play-state: paused; }
+@keyframes training-marquee {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+/* Respect reduced-motion: no auto-scroll (compact just clips + fades). */
+@media (prefers-reduced-motion: reduce) {
+  .is-compact .training-track { animation: none; }
+}
+
+.training-more {
+  margin-top: 0.75rem;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.72rem;
+  color: var(--accent);
+  cursor: pointer;
+}
+.training-more:hover { text-decoration: underline; }
 
 /* ---- CVES ---- */
 .cve-row {
@@ -672,6 +724,10 @@ footer a:hover { color: var(--accent); }
   .cert-grid { grid-template-columns: 1fr; }
   .cert-grid .cert-row:nth-last-child(-n+2) { border-bottom: var(--divider); }
   .cert-grid .cert-row:last-child { border-bottom: none; }
+
+  /* Stack the topic label above its chips so the chip column isn't squeezed. */
+  .training-topic { flex-direction: column; gap: 0.4rem; }
+  .training-topic-label { padding-top: 0; }
 
   .cve-row { grid-template-columns: 1fr; row-gap: 0.4rem; }
   .cve-severity { justify-self: start; }
