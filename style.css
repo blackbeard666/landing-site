@@ -293,13 +293,13 @@ section:last-of-type { border-bottom: none; }
 .currently-main {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 7;
 }
 
 .currently-hunting {
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
+  flex: 3;
 }
 
 .work-affiliations {
