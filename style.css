@@ -103,113 +103,99 @@ section:last-of-type { border-bottom: none; }
   justify-content: center;
 }
 
-.phone-frame {
-  width: 210px;
-  background: #080809;
-  border: 1px solid var(--border);
-  border-radius: 28px;
-  padding: 1rem 1.1rem;
-  box-shadow: 0 0 0 6px #111116, 0 0 0 7px #2a2a35, 0 0 48px rgba(91,143,255,0.07);
+/* ---- HERO PHONE TERMINAL ----
+   A photoreal phone render (PNG) with a live-scan terminal layer mapped onto its
+   screen glass by script.js. Terminal green (#4ade80) is a DELIBERATE exception to
+   the site's no-new-colors rule, scoped to this screen only — do not normalize it
+   to var(--accent). See CLAUDE.md > Design System. */
+.pt {
+  /* the only knobs you need */
+  --pt-accent: #4ade80;
+  --pt-width: clamp(200px, 30vw, 240px);
+
+  /* The render carries 7.67% transparent padding above and below the phone body
+     (measured off the PNG's alpha channel: body spans y 115-1384 of 1500). The
+     image is 1:2, so that's 15.33% of the width at each end — ~86px of empty
+     layout box at 280px. Pull it back with negative block margins: the phone
+     renders identically, only transparent pixels overlap the neighbours, and the
+     hero stops being taller than the thing it contains. Scales with --pt-width. */
+  --pt-trim: calc(var(--pt-width) * 0.1533);
+
   position: relative;
-}
-
-.phone-frame::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 28px;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 3px,
-    rgba(0,0,0,0.12) 3px,
-    rgba(0,0,0,0.12) 4px
-  );
+  width: var(--pt-width);
+  margin-block: calc(var(--pt-trim) * -1);
+  /* Purely decorative (the whole screen is aria-hidden). Non-interactive so the
+     negative margins above can never let the box swallow clicks on whatever it
+     overlaps — on mobile it sits right below the hero CTAs. */
   pointer-events: none;
-  z-index: 2;
 }
+.pt-img { display: block; width: 100%; height: auto; }
+.pt-clip { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 
-.phone-frame::after {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #050506;
-  border: 1px solid var(--border);
-  z-index: 3;
-}
-
-.phone-btn {
-  position: absolute;
-  background: #3a3a48;
-  border-radius: 1px;
-  z-index: 1;
-}
-.phone-btn-power   { right: -9px; top: 70px; width: 3px; height: 28px; }
-.phone-btn-vol-up  { left: -9px;  top: 55px; width: 3px; height: 20px; }
-.phone-btn-vol-down{ left: -9px;  top: 82px; width: 3px; height: 20px; }
-
-@keyframes phone-glitch {
-  0%, 88%, 100% { transform: translate(0);        filter: none; }
-  89%           { transform: translate(-3px, 1px); filter: hue-rotate(80deg) brightness(1.1); }
-  90%           { transform: translate(3px, -2px); filter: hue-rotate(-60deg); }
-  91%           { transform: translate(-2px, 2px); filter: none; }
-  92%           { transform: translate(2px, -1px); filter: hue-rotate(40deg); }
-  93%           { transform: translate(0);         filter: none; }
-}
-
-@keyframes screen-flicker {
-  0%, 89%, 91%, 93%, 100% { opacity: 1; }
-  90%, 92% { opacity: 0.35; }
-}
-
-.phone-glitch-inner {
-  animation: phone-glitch 5s infinite;
-}
-
-.phone-status {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.58rem;
-  color: var(--muted);
-  padding: 0 0.1rem;
-  margin-bottom: 0.7rem;
-}
-
-.phone-app-name {
-  color: var(--accent);
-}
-
-.phone-screen {
-  font-family: var(--font);
-  font-size: 0.62rem;
-  line-height: 1.75;
-  color: var(--muted);
-  white-space: pre;
+/* the screen is authored at a fixed 560x1201 and scaled onto the render's
+   screen quad by JS — never restyle its widths in px-of-page */
+.pt-screen {
+  position: absolute; top: 0; left: 0;
+  width: 560px; height: 1201px;
+  transform-origin: 0 0;
+  border-radius: 73px;
   overflow: hidden;
-  margin: 0;
-  animation: screen-flicker 5s infinite;
+  font-family: var(--font);
 }
-
-.ps-label  { color: var(--accent); font-weight: 700; text-shadow: -2px 0 rgba(255,30,80,0.45), 2px 0 rgba(0,210,255,0.45); }
-.ps-dim    { color: #2e2e3a; }
-.ps-warn   { color: #f97316; }
-.ps-bad    { color: #ef4444; }
-.ps-ok     { color: var(--accent); }
-.ps-cursor { color: var(--accent); animation: blink 1.1s step-end infinite; }
-
-.phone-home-bar {
-  width: 52px;
-  height: 4px;
-  background: var(--border);
-  border-radius: 2px;
-  margin: 0.85rem auto 0;
+.pt-status {
+  position: absolute; top: 26px; left: 38px; right: 38px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 22px; font-weight: 700; color: var(--muted);
 }
-
+.pt-status i { display: block; background: #4a5266; }
+.pt-status span { display: flex; gap: 7px; align-items: flex-end; }
+.pt-head {
+  position: absolute; top: 92px; left: 38px; right: 38px;
+  display: flex; gap: 14px; align-items: baseline; font-size: 22px; font-weight: 700;
+}
+.pt-head b { color: var(--pt-accent); font-weight: 700; }
+.pt-head em { color: #3a4152; font-weight: 500; font-style: normal; }
+.pt-rule { position: absolute; top: 140px; left: 38px; right: 38px; height: 2px; background: #1c1d22; }
+.pt-body { position: absolute; top: 168px; left: 38px; right: 38px; display: flex; flex-direction: column; }
+.pt-body div { font-size: 21px; line-height: 33px; white-space: pre; color: #3f4a63; }
+.pt-body .ok   { color: color-mix(in oklab, var(--pt-accent) 72%, #cfe9d8); }
+.pt-body .warn {
+  color: var(--pt-accent);
+  background: color-mix(in oklab, var(--pt-accent) 12%, transparent);
+  margin: 0 -12px; padding: 0 12px;
+}
+.pt-caret {
+  display: inline-block; width: 11px; height: 20px; vertical-align: -3px;
+  background: var(--pt-accent); animation: pt-caret 1s steps(1) infinite;
+}
+@keyframes pt-caret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.pt-panel {
+  position: absolute; top: 846px; left: 38px; right: 38px;
+  background: #131318; border-top: 2px solid #1e2130; padding: 22px 20px 26px;
+}
+.pt-panel h4 { margin: 0 0 20px; font-size: 18px; font-weight: 700; letter-spacing: .08em; color: #4a5266; }
+.pt-bars { display: flex; flex-direction: column; gap: 12px; }
+.pt-bars > div { height: 12px; background: #1c2030; position: relative; overflow: hidden; }
+.pt-bars > div > i {
+  position: absolute; inset: 0 auto 0 0; height: 100%; width: 0;
+  background: color-mix(in oklab, var(--pt-accent) 55%, #0d0d0f);
+  transition: width .5s cubic-bezier(.3, .8, .4, 1);
+}
+.pt-bars > div:first-child > i { background: var(--pt-accent); }
+.pt-foot {
+  position: absolute; top: 1092px; left: 38px; right: 38px;
+  border-top: 2px solid #1c1d22; padding-top: 18px;
+  display: flex; justify-content: space-between; font-size: 18px; color: #3a4152;
+}
+.pt-foot b { color: var(--pt-accent); font-weight: 400; }
+.pt-home { position: absolute; bottom: 22px; left: 50%; width: 172px; height: 6px; margin-left: -86px; background: #2a2d36; }
+.pt-glow {
+  position: absolute; inset: 12% 18%; pointer-events: none; filter: blur(30px);
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--pt-accent) 16%, transparent), transparent 72%);
+}
+/* Paired with the JS guard in script.js, which renders a static filled screen
+   instead of running the typing loop. */
+@media (prefers-reduced-motion: reduce) { .pt-caret { animation: none; } }
 
 .hero-eyebrow {
   font-size: 0.7rem;
@@ -717,7 +703,7 @@ footer a:hover { color: var(--accent); }
 
   #about { grid-template-columns: 1fr; }
   .hero-visual { margin-top: 1.5rem; }
-  .phone-frame { width: 180px; }
+  /* --pt-width's clamp() floor (200px) already handles small screens. */
 
   .currently-layout { flex-direction: column; gap: 2rem; }
 

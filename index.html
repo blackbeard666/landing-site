@@ -45,31 +45,33 @@
       </div>
     </div>
 
+    <!-- Phone render + a CSS screen layer that script.js maps onto the render's
+         screen glass via a matrix3d homography. The screen is authored at a fixed
+         560x1201; never restyle it in px-of-page. -->
     <div class="hero-visual">
-      <div class="phone-frame">
-        <span class="phone-btn phone-btn-power"></span>
-        <span class="phone-btn phone-btn-vol-up"></span>
-        <span class="phone-btn phone-btn-vol-down"></span>
-        <div class="phone-status">
-          <span>13:37</span>
-          <span class="phone-app-name">targetting.system</span>
+      <div class="pt" data-phone-terminal>
+        <img class="pt-img" src="images/phone-front-g-750.png"
+             srcset="images/phone-front-g-750.png 1x, images/phone-front-g.png 2x"
+             width="750" height="1500" decoding="async"
+             alt="Phone running a live mobile security scan" />
+        <div class="pt-clip" aria-hidden="true">
+          <div class="pt-screen">
+            <div class="pt-status">09:41 <span><i style="width:15px;height:14px"></i><i style="width:20px;height:18px"></i><i style="width:36px;height:14px"></i></span></div>
+            <div class="pt-head"><b>recon</b><em data-pt-target></em></div>
+            <div class="pt-rule"></div>
+            <div class="pt-body">
+              <div data-pt-log style="display:contents"></div>
+              <div data-pt-typed></div>
+            </div>
+            <div class="pt-panel">
+              <h4>ATTACK SURFACE</h4>
+              <div class="pt-bars"><div><i></i></div><div><i></i></div><div><i></i></div><div><i></i></div></div>
+            </div>
+            <div class="pt-foot"><span data-pt-findings>0 findings</span><b data-pt-critical>0 critical</b></div>
+            <div class="pt-home"></div>
+          </div>
         </div>
-        <div class="phone-glitch-inner">
-          <pre class="phone-screen"><span class="ps-label">ATTACK SURFACE</span>
-<span class="ps-dim">target: com.banking.app</span>
-<span class="ps-dim">─────────────────────</span>
-
-<span class="ps-warn">[!]</span> ssl pinning    <span class="ps-bad">bypassable</span>
-<span class="ps-warn">[!]</span> root detect    <span class="ps-bad">weak</span>
-<span class="ps-warn">[!]</span> backup flag    <span class="ps-bad">enabled</span>
-<span class="ps-warn">[!]</span> exported actv  <span class="ps-bad">3 found</span>
-<span class="ps-warn">[!]</span> webview js     <span class="ps-bad">true</span>
-<span class="ps-warn">[!]</span> deep links     <span class="ps-bad">unvalidated</span>
-
-<span class="ps-ok">[+]</span> pwning for fun and profit...
-<span class="ps-cursor">_</span></pre>
-        </div>
-        <div class="phone-home-bar"></div>
+        <div class="pt-glow"></div>
       </div>
     </div>
   </section>
