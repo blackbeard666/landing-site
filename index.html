@@ -3,328 +3,427 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carlo Jae Avila</title>
-  <meta name="description" content="Security researcher based in Manila." />
+  <title>Carlo Jae Avila — Android application security</title>
+  <meta name="description" content="Lead Offensive Security Engineer at Secuna. Six disclosed CVEs in Android applications, each with a full technical write-up." />
   <link rel="icon" type="image/png" href="favicon.png" />
+
+  <!-- Applies the saved theme before any stylesheet paints, so a light-theme
+       visitor never sees a flash of the dark ground. Must stay inline and must
+       stay above the <link> tags. -->
+  <script>if(localStorage.getItem('theme')==='light')document.documentElement.dataset.theme='light'</script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- tokens.css FIRST — style.css consumes its custom properties. This file is
+       the canonical copy; carlo-notes mirrors it. Edit both together. -->
+  <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="/" class="nav-logo">_blackb3ard<span class="dot">~#</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">about</a></li>
-    <li><a href="#certs">certs</a></li>
-    <li><a href="#cves">cves</a></li>
-    <li><a href="https://path2pwn.carlojaeavila.dev" class="external">writeups ↗</a></li>
-  </ul>
-</nav>
+<a class="skip" href="#main">skip to content</a>
 
-<main>
+<header class="site-header">
+  <nav class="site-nav">
+    <a href="/" class="nav-logo">_blackb3ard<span class="nav-logo-sigil">~#</span><span class="nav-caret">_</span></a>
 
-  <!-- HERO -->
-  <section id="about">
-    <div class="hero-content">
-      <p class="hero-eyebrow">// security researcher · payload development · mobile exploitation</p>
-      <h1 class="hero-name">Carlo Jae Avila<span class="cursor">_</span></h1>
-      <p class="hero-subtitle">
-        pwning droids —
-        <span class="purple">for fun and profit (only made like $600 so far)</span>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#cves">cves</a></li>
+        <li><a href="#certs">certs</a></li>
+        <li><a href="#work">work</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="https://path2pwn.carlojaeavila.dev" target="_blank" rel="noopener">writeups ↗</a></li>
+      </ul>
+
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme" aria-pressed="false">
+        <span class="theme-knob" aria-hidden="true"></span>
+      </button>
+
+      <a href="resume.pdf" target="_blank" rel="noopener" class="btn-hire">hire me</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero" id="hero">
+    <div class="hero-text">
+      <!-- The years figure is computed in script.js from data-since so it can
+           never go stale; a hardcoded tenure is worse than none. The fallback
+           text renders if JS is off. -->
+      <span class="kicker">Android application security · Manila, PH · <span data-since="2021-05">5+ years</span></span>
+      <h1 class="hero-name">Carlo Jae<br />Avila</h1>
+      <p class="hero-lede">
+        Lead Offensive Security Engineer at Secuna. I break
+        <span class="hero-lede-hl">mobile apps</span> for fun (still hunting for the profit part)
       </p>
       <p class="hero-bio">
-        Security researcher based in Manila, focused on mobile application security — Android/iOS apps and internals, malware analysis, and forensics.
-        Drawn toward red teaming, OSINT, and offensive AI security R&D.
+        Android and iOS internals, malware analysis, forensics. Currently pushing
+        into red teaming, OSINT, and offensive AI security research.
       </p>
       <div class="hero-ctas">
-        <a href="https://path2pwn.carlojaeavila.dev" class="btn btn-primary">read the writeups ↗</a>
-        <a href="mailto:root@carlojaeavila.dev" class="btn btn-ghost">contact</a>
+        <a href="https://path2pwn.carlojaeavila.dev" target="_blank" rel="noopener" class="btn btn-primary">read the writeups ↗</a>
+        <!-- The sparks are aria-hidden so the accessible name stays exactly
+             "resume (pdf)". They sit OUTSIDE the button box, so this element
+             must not get overflow: hidden. -->
+        <a href="resume.pdf" target="_blank" rel="noopener" class="btn btn-outline btn-sparkle">resume (pdf)<span class="spark" aria-hidden="true">✦</span><span class="spark" aria-hidden="true">✧</span><span class="spark" aria-hidden="true">✦</span><span class="spark" aria-hidden="true">✧</span><span class="spark" aria-hidden="true">✦</span><span class="spark" aria-hidden="true">✧</span></a>
       </div>
     </div>
 
-    <!-- Phone render + a CSS screen layer that script.js maps onto the render's
-         screen glass via a matrix3d homography. The screen is authored at a fixed
-         560x1201; never restyle it in px-of-page. -->
-    <div class="hero-visual">
-      <div class="pt" data-phone-terminal>
-        <img class="pt-img" src="images/phone-front-g-750.png"
-             srcset="images/phone-front-g-750.png 1x, images/phone-front-g.png 2x"
-             width="750" height="1500" decoding="async"
-             alt="Phone running a live mobile security scan" />
-        <div class="pt-clip" aria-hidden="true">
-          <div class="pt-screen">
-            <div class="pt-status">09:41 <span><i style="width:15px;height:14px"></i><i style="width:20px;height:18px"></i><i style="width:36px;height:14px"></i></span></div>
-            <div class="pt-head"><b>recon</b><em data-pt-target></em></div>
-            <div class="pt-rule"></div>
-            <div class="pt-body">
-              <div data-pt-log style="display:contents"></div>
-              <div data-pt-typed></div>
+    <!-- Pattern slider. Content lives in PATTERNS at the top of
+         js/patterns-slider.js; every entry is real code from a published
+         write-up. Do not add an entry whose `href` has no post behind it. -->
+    <div class="hero-panel">
+      <div class="slider solid" data-slider>
+        <div class="slider-head">
+          <span class="kicker">// patterns i've broken</span>
+          <div class="slider-nav">
+            <span class="slider-count" data-count></span>
+            <div class="dots" data-dots></div>
+          </div>
+        </div>
+
+        <div class="slider-body">
+          <div class="meta">
+            <span class="badge-cve" data-badge></span>
+            <span class="badge-sev" data-sev hidden></span>
+            <span class="target" data-target></span>
+            <!-- provenance (disclosure/ctf/research), not the taint source -->
+            <span class="provenance" data-provenance></span>
+          </div>
+
+          <!-- Title + impact share ONE height reservation (.slider-lede), so a
+               one-line title sits tight above its sentence instead of leaving the
+               second reserved line as a visible gap. The slack collects at the
+               bottom of the block, which keeps .taint starting at the same Y on
+               every slide — that is what the zero-jump work protects. Don't move
+               either of these back to a per-element min-height. -->
+          <div class="slider-lede">
+            <!-- Not a heading: this text is replaced every 15s, and a mutating
+                 <h3> right under the hero <h1> both skipped a level and made the
+                 document outline meaningless. Styled like one, not announced as
+                 one — the panel already has role="group" and an aria-label. -->
+            <p class="slider-title" data-title></p>
+
+            <!-- Impact ABOVE the code, deliberately. A cold recruiter review found
+                 this sentence was the only part of the card a non-coder consumed,
+                 and it was buried under twenty lines of Kotlin; the peer reviewer
+                 read the code and it's what earned their trust. Leading with the
+                 plain-English impact serves both — engineers still scroll down. -->
+            <p class="impact" data-impact></p>
+          </div>
+
+          <!-- The taint path: where untrusted data enters, the hops it takes,
+               and where it becomes dangerous. Both fragments are real code from
+               the linked write-up; see js/patterns-slider.js. -->
+          <div class="taint">
+            <div class="code" data-code-block="source">
+              <div class="code-head">
+                <span class="code-role">source</span>
+                <span class="code-file" data-source-file></span>
+                <button type="button" data-copy>copy</button>
+              </div>
+              <pre data-source-code></pre>
             </div>
-            <div class="pt-panel">
-              <h4>ATTACK SURFACE</h4>
-              <div class="pt-bars"><div><i></i></div><div><i></i></div><div><i></i></div><div><i></i></div></div>
+
+            <p class="taint-flow">
+              <span class="taint-arrow" aria-hidden="true">↓</span>
+              <span data-flow></span>
+            </p>
+
+            <div class="code" data-code-block="sink">
+              <div class="code-head">
+                <span class="code-role is-sink">sink</span>
+                <span class="code-file" data-sink-file></span>
+                <button type="button" data-copy>copy</button>
+              </div>
+              <pre data-sink-code></pre>
             </div>
-            <div class="pt-foot"><span data-pt-findings>0 findings</span><b data-pt-critical>0 critical</b></div>
-            <div class="pt-home"></div>
-          </div>
-        </div>
-        <div class="pt-glow"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CURRENTLY -->
-  <section id="currently">
-    <div class="currently-layout">
-
-      <div class="currently-main">
-        <p class="section-label">// currently</p>
-        <div class="work-affiliations">
-
-          <div class="work-block">
-            <a href="https://secuna.io" target="_blank" rel="noopener">
-              <img src="images/secuna-logo.svg" alt="Secuna" class="work-logo" />
-            </a>
-            <span class="work-dot work-dot-current"></span>
-            <p class="work-role work-role-current">Lead Offensive Security Engineer</p>
-
-            <div class="work-spacer"></div>
-            <span class="work-dot"></span>
-            <p class="work-role">Junior Penetration Tester</p>
-
-            <div class="work-spacer"></div>
-            <span class="work-dot"></span>
-            <p class="work-role">Penetration Testing Intern</p>
           </div>
 
-          <div class="work-block">
-            <a href="https://hackstreetboys.ph" target="_blank" rel="noopener">
-              <img src="images/logo-original.png" alt="hackstreetboys" class="work-logo work-logo-icon" />
-            </a>
-            <span class="work-dot work-dot-current"></span>
-            <p class="work-role work-role-current">Member, CTF Player</p>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="currently-hunting">
-        <p class="section-label">// hunting</p>
-        <div class="bounty-platforms">
-          <a href="https://hackerone.com/black_b3ard?type=user" target="_blank" rel="noopener" class="bounty-logo-link">
-            <img src="images/h1-logo.svg" alt="HackerOne" class="bounty-logo work-logo-hsb" />
-          </a>
-          <a href="https://bughunters.google.com/profile/5c62bde4-96d6-47d0-b333-eecff17f92a2" target="_blank" rel="noopener" class="bounty-logo-link">
-            <img src="images/bughunters-icon.png" alt="Google Bug Hunters" class="bounty-logo" />
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- CERTS -->
-  <section id="certs">
-    <p class="section-label">// certifications &amp; training</p>
-
-    <div class="cert-group">
-      <p class="cert-group-label">certified</p>
-      <div class="cert-grid">
-
-      <div class="cert-row">
-        <img src="images/badge-caah.png" alt="CAAH badge" class="cert-logo" />
-        <div class="cert-info">
-          <div class="cert-name">
-            <span class="cert-acronym">CAAH</span>
-            <span class="cert-fullname">Certified Advanced Android Hacker</span>
-          </div>
-          <div class="cert-desc">Covers advanced Android exploitation techniques and vulnerability research, preparing for competitive security challenges like Pwn2Own.</div>
-        </div>
-        <a class="cert-link" href="https://credsverse.com/credentials/ff2061a9-5bdc-4537-a2f7-2e1938f18d55" target="_blank" rel="noopener">↗</a>
-      </div>
-
-      <div class="cert-row">
-        <img src="images/badge-omse.png" alt="OMSE badge" class="cert-logo" />
-        <div class="cert-info">
-          <div class="cert-name">
-            <span class="cert-acronym">OMSE</span>
-            <span class="cert-fullname">Offensive Mobile Security Expert</span>
-          </div>
-          <div class="cert-desc">Validates expertise in iOS and Android security across userland and kernel components, including vulnerability research and advanced mobile exploitation.</div>
-        </div>
-        <a class="cert-link" href="https://www.credly.com/badges/4aff212f-d2c7-422e-a49a-411eac984346" target="_blank" rel="noopener">↗</a>
-      </div>
-
-      <div class="cert-row">
-        <img src="images/badge-emapt.png" alt="eMAPT badge" class="cert-logo" />
-        <div class="cert-info">
-          <div class="cert-name">
-            <span class="cert-acronym">eMAPT</span>
-            <span class="cert-fullname">eLearnSecurity Mobile Application Penetration Tester</span>
-          </div>
-          <div class="cert-desc">Validates Android mobile application penetration testing skills through a fully practical exam.</div>
-        </div>
-        <a class="cert-link" href="https://verify.ine.com/" target="_blank" rel="noopener">↗</a>
-      </div>
-
-      <div class="cert-row">
-        <img src="images/badge-ewptx.png" alt="eWPTXv2 badge" class="cert-logo" />
-        <div class="cert-info">
-          <div class="cert-name">
-            <span class="cert-acronym">eWPTXv2</span>
-            <span class="cert-fullname">eLearnSecurity Web Application Penetration Tester eXtreme</span>
-          </div>
-          <div class="cert-desc">Validates advanced web application penetration testing skills including complex exploitation and bypass techniques.</div>
-        </div>
-        <a class="cert-link" href="https://verify.ine.com/" target="_blank" rel="noopener">↗</a>
-      </div>
-
-      </div><!-- /.cert-grid -->
-    </div>
-
-    <div class="cert-group">
-      <p class="cert-group-label">recent training</p>
-      <div class="training-viewport">
-        <div class="training-track">
-          <div class="training-groups">
-            <div class="training-topic">
-              <span class="training-topic-label">pentest</span>
-              <ul class="chip-list">
-                <li><a class="chip" href="#" target="_blank" rel="noopener">HTB Academy · Penetration Tester Path</a></li>
-                <li><a class="chip" href="#" target="_blank" rel="noopener">TCM Security · Practical Ethical Hacking</a></li>
-              </ul>
-            </div>
-            <div class="training-topic">
-              <span class="training-topic-label">web</span>
-              <ul class="chip-list">
-                <li><a class="chip" href="#" target="_blank" rel="noopener">HTB Academy · Bug Bounty Hunter Path</a></li>
-              </ul>
-            </div>
-            <div class="training-topic">
-              <span class="training-topic-label">ai</span>
-              <ul class="chip-list">
-                <li><a class="chip" href="#" target="_blank" rel="noopener">TryHackMe · AI Security Path</a></li>
-              </ul>
+          <div class="slider-foot">
+            <a data-link target="_blank" rel="noopener">read the writeup ↗</a>
+            <div class="arrows">
+              <button type="button" data-prev aria-label="Previous pattern">←</button>
+              <button type="button" data-next aria-label="Next pattern">→</button>
             </div>
           </div>
         </div>
       </div>
-      <button class="training-more" type="button" hidden>show more</button>
     </div>
   </section>
 
-  <!-- CVES -->
+  <!-- ============================ CVES ============================ -->
+  <!-- Rows are newest-disclosed-first, ordered by the `date:` field in the
+       matching carlo-notes/content/cves/*.md file — that date is authoritative,
+       not the CVE-ID year. Each title links to the write-up; NVD is secondary. -->
   <section id="cves">
-    <p class="section-label">// cves</p>
-
-    <div class="cve-row">
-      <span class="cve-id">CVE-2024-44336</span>
-      <span class="cve-severity severity-medium">MEDIUM</span>
-      <div class="cve-body">
-        <div class="cve-product">AnkiDroid Open Source Team · AnkiDroid</div>
-        <div class="cve-desc">Attackers can retrieve internal app files from private storage and save them to publicly accessible storage in AnkiDroid v2.17.6.</div>
+    <div class="section-head">
+      <div>
+        <span class="kicker">// disclosed · all patched upstream</span>
+        <h2>Security Research CVEs</h2>
       </div>
-      <a href="https://nvd.nist.gov/vuln/detail/CVE-2024-44336" class="project-link" target="_blank" rel="noopener">↗</a>
+      <p class="section-note"></p>
     </div>
 
-    <div class="cve-row">
-      <span class="cve-id">CVE-2024-33469</span>
-      <span class="cve-severity severity-high">HIGH</span>
-      <div class="cve-body">
-        <div class="cve-product">Team Amaze · Amaze File Manager</div>
-        <div class="cve-desc">Local attackers can execute arbitrary code via DatabaseViewerActivity in Amaze File Manager up to version 3.8.5.</div>
-      </div>
-      <a href="https://nvd.nist.gov/vuln/detail/CVE-2024-33469" class="project-link" target="_blank" rel="noopener">↗</a>
-    </div>
+    <div class="cve-list">
 
-    <div class="cve-row">
-      <span class="cve-id">CVE-2023-4876</span>
-      <span class="cve-severity severity-high">HIGH</span>
-      <div class="cve-body">
-        <div class="cve-product">hamza417 · Inure App Manager</div>
-        <div class="cve-desc">Theft of Arbitrary Files due to lack of intent validation and insecure usage of provider paths in TTFViewerActivity.kt.</div>
+      <div class="cve-row">
+        <span class="cve-id">CVE-2024-44336</span>
+        <span class="badge-sev is-medium">MEDIUM</span>
+        <div class="cve-body">
+          <a class="cve-title" href="https://path2pwn.carlojaeavila.dev/cves/cve-2024-44336/" target="_blank" rel="noopener">Unvalidated implicit intent result leaks private files to a world-readable cache</a>
+          <p class="cve-vendor">AnkiDroid Open Source Team · AnkiDroid v2.17.6 · Feb 2025</p>
+        </div>
+        <a class="cve-nvd" href="https://nvd.nist.gov/vuln/detail/CVE-2024-44336" target="_blank" rel="noopener">NVD ↗</a>
       </div>
-      <a href="https://nvd.nist.gov/vuln/detail/CVE-2023-4876" class="project-link" target="_blank" rel="noopener">↗</a>
-    </div>
 
-    <div class="cve-row">
-      <span class="cve-id">CVE-2023-5948</span>
-      <span class="cve-severity severity-medium">MEDIUM</span>
-      <div class="cve-body">
-        <div class="cve-product">Team Amaze · Amaze File Utilities</div>
-        <div class="cve-desc">Theft of Arbitrary Files from non-exported FileProvider via improper implementation of setResult in WelcomeScreen.kt.</div>
+      <div class="cve-row">
+        <span class="cve-id">CVE-2024-33469</span>
+        <span class="badge-sev is-high">HIGH</span>
+        <div class="cve-body">
+          <a class="cve-title" href="https://path2pwn.carlojaeavila.dev/cves/cve-2024-33469/" target="_blank" rel="noopener">OS command injection through an unsanitized path extra in DatabaseViewerActivity</a>
+          <p class="cve-vendor">Team Amaze · Amaze File Manager ≤ 3.8.5 · Feb 2024</p>
+        </div>
+        <a class="cve-nvd" href="https://nvd.nist.gov/vuln/detail/CVE-2024-33469" target="_blank" rel="noopener">NVD ↗</a>
       </div>
-      <a href="https://nvd.nist.gov/vuln/detail/CVE-2023-5948" class="project-link" target="_blank" rel="noopener">↗</a>
-    </div>
 
-    <div class="cve-row">
-      <span class="cve-id">CVE-2023-4435</span>
-      <span class="cve-severity severity-medium">MEDIUM</span>
-      <div class="cve-body">
-        <div class="cve-product">hamza417 · Inure App Manager</div>
-        <div class="cve-desc">Theft of Arbitrary Files due to execution of attacker scripts from BashAssociation.kt.</div>
+      <div class="cve-row">
+        <span class="cve-id">CVE-2023-4876</span>
+        <span class="badge-sev is-high">HIGH</span>
+        <div class="cve-body">
+          <a class="cve-title" href="https://path2pwn.carlojaeavila.dev/cves/cve-2023-4876/" target="_blank" rel="noopener">File theft via missing intent validation and over-broad FileProvider paths</a>
+          <p class="cve-vendor">hamza417 · Inure App Manager · Aug 2023</p>
+        </div>
+        <a class="cve-nvd" href="https://nvd.nist.gov/vuln/detail/CVE-2023-4876" target="_blank" rel="noopener">NVD ↗</a>
       </div>
-      <a href="https://nvd.nist.gov/vuln/detail/CVE-2023-4435" class="project-link" target="_blank" rel="noopener">↗</a>
-    </div>
 
-    <div class="cve-row">
-      <span class="cve-id">CVE-2023-4434</span>
-      <span class="cve-severity severity-medium">MEDIUM</span>
-      <div class="cve-body">
-        <div class="cve-product">hamza417 · Inure App Manager</div>
-        <div class="cve-desc">Improper validation of intent data received in TextViewerActivity allows opening of arbitrary files.</div>
+      <div class="cve-row">
+        <span class="cve-id">CVE-2023-4435</span>
+        <span class="badge-sev is-medium">MEDIUM</span>
+        <div class="cve-body">
+          <a class="cve-title" href="https://path2pwn.carlojaeavila.dev/cves/cve-2023-4435/" target="_blank" rel="noopener">Attacker-controlled bash scripts execute through the exported BashAssociation activity</a>
+          <p class="cve-vendor">hamza417 · Inure App Manager · Aug 2023</p>
+        </div>
+        <a class="cve-nvd" href="https://nvd.nist.gov/vuln/detail/CVE-2023-4435" target="_blank" rel="noopener">NVD ↗</a>
       </div>
-      <a href="https://nvd.nist.gov/vuln/detail/CVE-2023-4434" class="project-link" target="_blank" rel="noopener">↗</a>
+
+      <div class="cve-row">
+        <span class="cve-id">CVE-2023-4434</span>
+        <span class="badge-sev is-medium">MEDIUM</span>
+        <div class="cve-body">
+          <a class="cve-title" href="https://path2pwn.carlojaeavila.dev/cves/cve-2023-4434/" target="_blank" rel="noopener">Intent validation gap in TextViewerActivity opens arbitrary private files</a>
+          <p class="cve-vendor">hamza417 · Inure App Manager · Aug 2023</p>
+        </div>
+        <a class="cve-nvd" href="https://nvd.nist.gov/vuln/detail/CVE-2023-4434" target="_blank" rel="noopener">NVD ↗</a>
+      </div>
+
+      <div class="cve-row">
+        <span class="cve-id">CVE-2023-5948</span>
+        <span class="badge-sev is-medium">MEDIUM</span>
+        <div class="cve-body">
+          <a class="cve-title" href="https://path2pwn.carlojaeavila.dev/cves/cve-2023-5948/" target="_blank" rel="noopener">setResult misuse in a third-party welcome screen leaks a non-exported FileProvider</a>
+          <p class="cve-vendor">Team Amaze · Amaze File Utilities · WelcomeScreen.kt · Aug 2023</p>
+        </div>
+        <a class="cve-nvd" href="https://nvd.nist.gov/vuln/detail/CVE-2023-5948" target="_blank" rel="noopener">NVD ↗</a>
+      </div>
+
     </div>
   </section>
 
-  <!-- PROJECTS -->
+  <!-- ======================= CERTIFICATIONS ======================= -->
+  <!-- Four or fewer certs: this 4-column grid, where the 2px gap on an --n-800
+       background IS the rule. Past about six, switch to the record table
+       (option 8a in the design file) — see CLAUDE.md. -->
+  <section id="certs">
+    <div class="section-head">
+      <div>
+        <span class="kicker">// credentials</span>
+        <h2>Certifications</h2>
+      </div>
+      <p class="section-note">mobile-heavy, all hands-on exams</p>
+    </div>
+
+    <div class="cert-grid">
+
+      <div class="cert-cell">
+        <img src="images/badge-caah.png" alt="Certified Advanced Android Hacker badge" class="cert-logo" width="36" height="36" loading="lazy" decoding="async" />
+        <p class="cert-acronym">CAAH</p>
+        <p class="cert-fullname">Certified Advanced Android Hacker</p>
+        <p class="cert-desc">Advanced Android exploitation and vulnerability research, aimed at competition-grade targets.</p>
+        <a class="cert-verify" href="https://credsverse.com/credentials/ff2061a9-5bdc-4537-a2f7-2e1938f18d55" target="_blank" rel="noopener">verify ↗</a>
+      </div>
+
+      <div class="cert-cell">
+        <img src="images/badge-omse.png" alt="Offensive Mobile Security Expert badge" class="cert-logo" width="36" height="36" loading="lazy" decoding="async" />
+        <p class="cert-acronym">OMSE</p>
+        <p class="cert-fullname">Offensive Mobile Security Expert</p>
+        <p class="cert-desc">iOS and Android security across userland and kernel, including vulnerability research.</p>
+        <a class="cert-verify" href="https://www.credly.com/badges/4aff212f-d2c7-422e-a49a-411eac984346" target="_blank" rel="noopener">verify ↗</a>
+      </div>
+
+      <!-- TODO(carlo): the two INE rows previously linked to https://verify.ine.com/
+           which is the verifier's front door, not a credential — it can't confirm
+           anything. The `verify ↗` affordance is intentionally omitted until a real
+           per-credential URL exists. Paste one in and the link returns. -->
+      <div class="cert-cell">
+        <img src="images/badge-emapt.png" alt="eLearnSecurity Mobile Application Penetration Tester badge" class="cert-logo" width="36" height="36" loading="lazy" decoding="async" />
+        <p class="cert-acronym">eMAPT</p>
+        <p class="cert-fullname">eLearnSecurity Mobile Application Penetration Tester</p>
+        <p class="cert-desc">Android application penetration testing, assessed through a fully practical exam.</p>
+      </div>
+
+      <div class="cert-cell">
+        <img src="images/badge-ewptx.png" alt="eLearnSecurity Web Application Penetration Tester eXtreme badge" class="cert-logo" width="36" height="36" loading="lazy" decoding="async" />
+        <p class="cert-acronym">eWPTXv2</p>
+        <p class="cert-fullname">eLearnSecurity Web Application Penetration Tester eXtreme</p>
+        <p class="cert-desc">Advanced web application exploitation and filter-bypass technique.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================== WORK + PROFILES ====================== -->
+  <section id="work">
+    <div class="section-head">
+      <div>
+        <span class="kicker">// currently</span>
+        <h2>Work</h2>
+      </div>
+    </div>
+
+    <div class="work-layout">
+
+      <div class="work-col">
+        <div class="work-row">
+          <a href="https://secuna.io" target="_blank" rel="noopener" class="work-logo-link">
+            <img src="images/secuna-logo.svg" alt="Secuna" class="work-logo" width="60" height="60" />
+          </a>
+          <div>
+            <p class="work-name">Secuna</p>
+            <p class="work-context">Manila, PH · cybersecurity platform</p>
+            <!-- Dates and nothing else. Team size, engagement counts and client
+                 sectors deliberately live in resume.pdf, not here — the landing
+                 page is a lean pointer. See CLAUDE.md. -->
+            <ol class="work-roles">
+              <li class="work-role is-current">
+                <span class="work-dot" aria-hidden="true"></span>
+                <span class="work-role-name">Lead Offensive Security Engineer</span>
+                <span class="work-current-label">current</span>
+                <span class="work-dates">Jan 2023 – present</span>
+              </li>
+              <li class="work-role">
+                <span class="work-role-name">Junior Penetration Tester</span>
+                <span class="work-dates">Jul 2021 – Dec 2022</span>
+              </li>
+              <li class="work-role">
+                <span class="work-role-name">Penetration Testing Intern</span>
+                <span class="work-dates">May 2021 – Jun 2021</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="work-row">
+          <a href="https://hackstreetboys.ph" target="_blank" rel="noopener" class="work-logo-link">
+            <img src="images/logo-original.png" alt="hackstreetboys" class="work-logo" width="60" height="60" loading="lazy" decoding="async" />
+          </a>
+          <div>
+            <p class="work-name">hackstreetboys</p>
+            <p class="work-context">Manila, PH · CTF team</p>
+            <ol class="work-roles">
+              <li class="work-role is-current">
+                <span class="work-dot" aria-hidden="true"></span>
+                <span class="work-role-name">Member · CTF player</span>
+                <span class="work-current-label">current</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profiles are links, deliberately not counted metrics — "02 bounty
+           platforms" counts accounts, not accomplishments. -->
+      <div class="profiles-col">
+        <h3 class="profiles-head">Profiles</h3>
+        <!-- Google first, deliberately: a GPSRP acceptance is the substantive
+             signal here. No counts on any row while the relevant report is still
+             private — see the backlog in CLAUDE.md. -->
+        <ul class="profile-list">
+          <li class="profile-row">
+            <span class="profile-name">Google Bug Hunters</span>
+            <a href="https://bughunters.google.com/profile/5c62bde4-96d6-47d0-b333-eecff17f92a2" target="_blank" rel="noopener">profile ↗</a>
+          </li>
+          <li class="profile-row">
+            <span class="profile-name">HackerOne</span>
+            <a href="https://hackerone.com/black_b3ard?type=user" target="_blank" rel="noopener">black_b3ard ↗</a>
+          </li>
+          <li class="profile-row">
+            <span class="profile-name">Hack The Box</span>
+            <a href="https://app.hackthebox.com/users/454337" target="_blank" rel="noopener">profile ↗</a>
+          </li>
+          <li class="profile-row">
+            <span class="profile-name">TryHackMe</span>
+            <a href="https://tryhackme.com/p/BLACKBEARD" target="_blank" rel="noopener">BLACKBEARD ↗</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ========================== PROJECTS ========================== -->
   <section id="projects">
-    <p class="section-label">// projects</p>
-
-    <div class="project-row">
-      <div class="project-info">
-        <div class="project-name">pwn_exhibit</div>
-        <div class="project-desc">Archive of CTF writeups and exploit dev notes — binary exploitation, Android reverse engineering, and malware analysis.</div>
+    <div class="section-head">
+      <div>
+        <span class="kicker">// development</span>
+        <h2>Projects</h2>
       </div>
-      <span class="project-lang">Python</span>
-      <a href="https://github.com/blackbeard666/pwn_exhibit" class="project-link" target="_blank" rel="noopener">↗</a>
     </div>
 
-    <div class="project-row">
-      <div class="project-info">
-        <div class="project-name">???</div>
-        <div class="project-desc">Something new is in the works — more details soon.</div>
+    <div class="project-list">
+      <div class="project-row">
+        <div class="project-info">
+          <p class="project-name">pwn_exhibit</p>
+          <p class="project-desc">Archive of CTF writeups and exploit dev notes — binary exploitation, Android reverse engineering, and malware analysis.</p>
+        </div>
+        <span class="project-lang">Python</span>
+        <a class="project-link" href="https://github.com/blackbeard666/pwn_exhibit" target="_blank" rel="noopener">github ↗</a>
       </div>
-      <span class="project-lang">wip</span>
+      <!-- The "???" / wip row is gone. An unresolvable row costs more trust than
+           it earns; add it back when there is a repo to point at. -->
     </div>
-  </section>
-
-  <!-- FIND ME -->
-  <section id="find-me">
-    <p class="section-label">// find me</p>
-    <ul class="find-me-links">
-      <li><a href="https://discord.com/users/517523505588207633" target="_blank" rel="noopener">discord</a></li>
-      <li><a href="https://github.com/blackbeard666" target="_blank" rel="noopener">github</a></li>
-      <li><a href="https://linkedin.com/in/carlojaeavila" target="_blank" rel="noopener">linkedin</a></li>
-      <li><a href="https://x.com/_blackb3ard" target="_blank" rel="noopener">twitter</a></li>
-      <li><a href="resume.pdf" target="_blank" rel="noopener" class="find-me-shiny">hire me</a></li>
-      <li><a href="https://app.hackthebox.com/users/454337" target="_blank" rel="noopener">htb</a></li>
-      <li><a href="https://tryhackme.com/p/BLACKBEARD" target="_blank" rel="noopener">tryhackme</a></li>
-    </ul>
   </section>
 
 </main>
 
-<footer>
-  <span>carlo · manila, ph · 2026</span>
-  <a href="https://path2pwn.carlojaeavila.dev" target="_blank" rel="noopener">path2pwn.carlojaeavila.dev ↗</a>
+<footer class="site-footer">
+  <!-- The one place red runs as a field. Do not add a second — see the
+       two-accent rule in CLAUDE.md. -->
+  <div class="contact">
+    <span class="contact-kicker">// contact</span>
+    <p class="contact-head">Hiring, or want a second pair of eyes on an APK?</p>
+    <a class="contact-mail" href="mailto:contact@carlojaeavila.dev">contact@carlojaeavila.dev</a>
+    <ul class="contact-links">
+      <li><a href="https://github.com/blackbeard666" target="_blank" rel="noopener">github ↗</a></li>
+      <li><a href="https://linkedin.com/in/carlojaeavila" target="_blank" rel="noopener">linkedin ↗</a></li>
+      <li><a href="https://x.com/_blackb3ard" target="_blank" rel="noopener">twitter ↗</a></li>
+      <li><a href="https://discord.com/users/517523505588207633" target="_blank" rel="noopener">discord ↗</a></li>
+    </ul>
+  </div>
+
+  <div class="byline">
+    <span>carlo · manila, ph · <span data-year>2026</span></span>
+    <a href="https://path2pwn.carlojaeavila.dev" target="_blank" rel="noopener">path2pwn.carlojaeavila.dev ↗</a>
+  </div>
 </footer>
 
-
-<script src="script.js"></script>
+<script src="js/patterns-slider.js" defer></script>
+<script src="script.js" defer></script>
 </body>
 </html>
