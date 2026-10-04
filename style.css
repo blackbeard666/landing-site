@@ -686,7 +686,7 @@ main > section {
 /* The 2px gap on an --n-800 field IS the rule — there are no cell borders. */
 .cert-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: var(--rule);
   margin-top: 28px;
   background: var(--n-800);
@@ -1003,6 +1003,9 @@ main > section {
   .profiles-col { padding-left: 0; padding-top: 28px; }
 
   .cert-grid { grid-template-columns: repeat(2, 1fr); }
+  /* An odd cert count leaves an empty slot, and an empty slot shows the
+     --n-800 field as a grey block. Let the last cell take the whole row. */
+  .cert-cell:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 
 @media (max-width: 720px) {
